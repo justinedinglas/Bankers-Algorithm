@@ -1,13 +1,17 @@
-This program implements the Banker’s Algorithm used in operating systems to avoid deadlock.
+This program implements the *Banker’s Algorithm* used in operating systems to avoid deadlock.  
 It checks if the system is currently in a safe state and allows users to make resource requests that are granted only if they keep the system safe.
 
-The program is written in C++. Compiling the code will be stated in MacOS as that is what we used to code on. 
+The program is written in **C++**. Compiling the code will be stated in **MacOS** as that is what we used to code on. 
 
 First, ensure that you are in the current directory where the .cpp file is and run the following command:
+```
 clang++ -std=c++11 bankers.cpp -o bankers
+```
 
 Once the program is successfully created, run the following command to execute:
+```
 ./bankers
+```
 
 A menu will be displayed upon execution.
 
