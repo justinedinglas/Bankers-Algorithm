@@ -114,3 +114,71 @@ public:
       cout << endl;
     }
 };
+int main() {
+  // number of processes and resources
+  int n = 5;
+  int m = 3;
+
+  // available resources in the system
+  vector<int> available = {3, 3, 2};
+
+  // maximum demand of each process
+  vector<vector<int>> maxNeed = {
+      {7, 5, 3},
+      {3, 2, 2},
+      {9, 0, 2},
+      {2, 2, 2},
+      {4, 3, 3}
+  };
+  // current allocation of resources
+  vector<vector<int>> allocation = {
+      {0, 1, 0},
+      {2, 0, 0},
+      {3, 0, 2},
+      {2, 1, 1},
+      {0, 0, 2}
+  };
+
+  // create the banker’s algorithm object
+  BankersAlgorithm system(n, m, available, maxNeed, allocation);
+
+  // creation of the test menu
+  int choice = -1;
+  while (choice != 0) {
+    cout << "\n=== BANKER'S ALGORITHM TEST MENU ===\n";
+    cout << "1. Check for safe sequence\n";
+    cout << "2. User-Defind Resource Request\n";
+    cout << "0. Exit\n";
+    cout << "Enter your choice (0-2): ";
+    cin >> choice;
+
+    if (choice == 1) { // test case 1: run safe test
+      cout << "Test Case 1: Run safe test\n";
+
+      vector<int> safeSequence;
+
+      if (system.isSafe(safeSequence)) {
+        cout << "System is in a safe state.\nSafe Sequence: [ ";
+        for (int p : safeSequence) cout << p << " ";
+        cout << "]\n\n";
+      } else cout << "System is NOT in a safe state.\n";
+
+    } else if (choice == 2) { // test case 2
+      cout << "Test Case 2:\n";
+
+      int processID;
+      vector<int> request(m);
+
+      cout << "Enter process ID (0–" << n - 1 << "): ";
+      cin >> processID;
+      cout << "Enter " << m << " resource values: " << " (format: r1 r2 r3): ";
+
+      for (int i = 0; i < m; i++) cin >> request[i];
+      system.requestResources(processID, request);
+
+    } else if (choice == 0) { // exit code
+      cout << "Exiting...\n";
+    }
+    return 0;
+  }
+}
