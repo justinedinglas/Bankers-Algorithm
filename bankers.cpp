@@ -65,3 +65,52 @@ public:
       } // if processes can finish safely
       return true;
     }
+
+    // resource-request algorithm
+    void requestResources(int processID, vector<int> request) {
+      cout << "# Process " << processID << " requests resources [ ";
+      for (int r : request) cout << r << " ";
+      cout << "]\n";
+
+      // check if request exceeds need
+      for (int i = 0; i < m; i++) {
+        if (request[i] > need[processID][i]) {
+          cout << "Error: Process exceeded its maximum claim.\n";
+          return;
+        }
+      }
+
+      // check if request exceeds available
+      for (int i = 0; i < m; i++) {
+        if (request[i] > available[i]) {
+          cout << "Error: Not enough resources available.\n";
+          return;
+        }
+      }
+
+      // temporarily allocate requested resources
+      for (int i = 0; i < m; i++) {
+        available[i] -= request[i];
+        allocation[processID][i] += request[i];
+        need[processID][i] -= request[i];
+      }
+
+      // run safety algorithm
+      vector<int> safeSequence;
+      if (isSafe(safeSequence)) {
+        cout << "System is in a safe state.\nSafe Sequence: [ ";
+        for (int p : safeSequence) cout << p << " ";
+        cout << "]\n";
+        cout << "Resources allocated to process " << processID << ".\n";
+      } else {
+        // rollback if unsafe
+        cout << "System is NOT in a safe state. Rolling back...\n";
+        for (int i = 0; i < m; i++) {
+          available[i] += request[i];
+          allocation[processID][i] -= request[i];
+          need[processID][i] += request[i];
+        }
+      }
+      cout << endl;
+    }
+};
