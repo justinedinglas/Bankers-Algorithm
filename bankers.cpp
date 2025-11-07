@@ -14,8 +14,12 @@ class BankersAlgorithm {
 
 public:
     // initializes the system with input matrices
-    BankersAlgorithm(int n, int m, vector<int> available, vector<vector<int>> maxNeed, vector<vector<int>> allocation)
-      : n(n), m(m), available(available), maxNeed(maxNeed), allocation(allocation) {
+    BankersAlgorithm(int n, int m,
+      vector<int> available,
+      vector<vector<int>> maxNeed,
+      vector<vector<int>> allocation)
+      : n(n), m(m), available(available),
+  maxNeed(maxNeed), allocation(allocation) {
         need.resize(n, vector<int>(m));
         calculateNeed();
     }
@@ -40,8 +44,9 @@ public:
         bool found = false;
 
         for (int p = 0; p < n; p++) {
-          if (!finish[p]) continue;
+          if (finish[p]) continue;
           bool canRun = true; // check if p can be satisfied
+
           for (int j = 0; j < m; j++) {
             if (need[p][j] > work[j]) {
               canRun = false;
@@ -113,6 +118,63 @@ public:
       }
       cout << endl;
     }
+
+    // display all the key matrices and vectors in the banker's algorithm system when the program starts
+    void displaySystemState() const {
+      cout << "n = " << n << " # Number of processes\n";
+      cout << "m = " << m << " # Number of resources types\n\n";
+
+      // display the available vector
+      // shows the currently available units of each resource type
+      cout << "# Available Vector (initially total resources available)\n[";
+      for (size_t i = 0; i < available.size(); i++) {
+        cout << available[i];
+        if (i != available.size() - 1) cout << ", ";
+      }
+      cout << "]\n\n";
+
+      // display max matrix
+      // maximum demand for each process
+      cout << "# Maximum Matrix\n[";
+      for (size_t i = 0; i < maxNeed.size(); i++) {
+        cout << "[";
+        for (size_t j = 0; j < maxNeed[i].size(); j++) {
+          cout << maxNeed[i][j];
+          if (j != maxNeed[i].size() - 1) cout << ", ";
+        }
+        cout << "]";
+        if (i != maxNeed.size() - 1) cout << ",\n";
+      }
+      cout << "]\n\n";
+
+      // print allocation matrix
+      // resources currently allocated
+      cout << "# Allocation Matrix\n[";
+      for (size_t i = 0; i < allocation.size(); i++) {
+        cout << "[";
+        for (size_t j = 0; j < allocation[i].size(); j++) {
+          cout << allocation[i][j];
+          if (j != allocation[i].size() - 1) cout << ", ";
+        }
+        cout << "]";
+        if (i != allocation.size() - 1) cout << ",\n";
+      }
+      cout << "]\n\n";
+
+      // print need matrix
+      // remaining resources required
+      cout << "# Need Matrix (Max - Allocation)\n[";
+      for (size_t i = 0; i < need.size(); i++) {
+        cout << "[";
+        for (size_t j = 0; j < need[i].size(); j++) {
+          cout << need[i][j];
+          if (j != need[i].size() - 1) cout << ", ";
+        }
+        cout << "]";
+        if (i != need.size() - 1) cout << ",\n";
+      }
+      cout << "]\n\n";
+    }
 };
 int main() {
   // number of processes and resources
@@ -130,6 +192,7 @@ int main() {
       {2, 2, 2},
       {4, 3, 3}
   };
+
   // current allocation of resources
   vector<vector<int>> allocation = {
       {0, 1, 0},
@@ -139,8 +202,9 @@ int main() {
       {0, 0, 2}
   };
 
-  // create the banker’s algorithm object
+  // create the banker’s algorithm system
   BankersAlgorithm system(n, m, available, maxNeed, allocation);
+  system.displaySystemState();
 
   // creation of the test menu
   int choice = -1;
@@ -179,6 +243,6 @@ int main() {
     } else if (choice == 0) { // exit code
       cout << "Exiting...\n";
     }
-    return 0;
   }
+  return 0;
 }
