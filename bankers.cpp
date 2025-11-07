@@ -4,7 +4,7 @@ using namespace std;
 
 class BankersAlgorithm {
     int n; // indicates the number of processes
-    int m; // indactes the number of resource types
+    int m; // indicates the number of resource types
 
     // system data structures:
     vector<int> available;               // available vector: resources currently available
@@ -209,31 +209,31 @@ int main() {
   // creation of the test menu
   int choice = -1;
   while (choice != 0) {
-    cout << "\n=== BANKER'S ALGORITHM TEST MENU ===\n";
+    cout << "=== BANKER'S ALGORITHM TEST MENU ===\n";
     cout << "1. Check for safe sequence\n";
-    cout << "2. User-Defind Resource Request\n";
+    cout << "2. User-Defined Resource Request\n";
     cout << "0. Exit\n";
     cout << "Enter your choice (0-2): ";
     cin >> choice;
 
     if (choice == 1) { // test case 1: run safe test
-      cout << "Test Case 1: Run safe test\n";
+      cout << "\nTest Case 1: Run safe test\n";
 
       vector<int> safeSequence;
 
       if (system.isSafe(safeSequence)) {
-        cout << "System is in a safe state.\nSafe Sequence: [ ";
+        cout << "\nSystem is in a safe state.\nSafe Sequence: [ ";
         for (int p : safeSequence) cout << p << " ";
         cout << "]\n\n";
       } else cout << "System is NOT in a safe state.\n";
 
     } else if (choice == 2) { // test case 2
-      cout << "Test Case 2:\n";
+      cout << "\nTest Case 2:\n";
 
       int processID;
       vector<int> request(m);
 
-      cout << "Enter process ID (0–" << n - 1 << "): ";
+      cout << "\nEnter process ID (0–" << n - 1 << "): ";
       cin >> processID;
       cout << "Enter " << m << " resource values: " << " (format: r1 r2 r3): ";
 
