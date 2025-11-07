@@ -16,7 +16,7 @@ Once the program is successfully created, run the following command to execute:
 A menu will be displayed upon execution.
 
 1. **Option 1: *Check safe sequence.***  
-  - Type 1 and press Enter.
+    - Type 1 and press Enter.
   - If the system is safe, you’ll see:
   - System is in a safe state. and a sequence like [1, 3, 4, 0, 2].
   - If it’s not safe, it will say so.
